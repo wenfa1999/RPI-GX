@@ -80,7 +80,6 @@ public:
 "    background-color: #2C3E50;\n"
 "    border: 2px solid rgb(164, 145, 145);\n"
 "    color: white;\n"
-"	box-shadow: 5px 5px 5px rgba(0,0,0,0.5);\n"
 "}\n"
 "\n"
 "QPushButton:hover {\n"

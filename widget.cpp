@@ -38,8 +38,8 @@ Widget::Widget(QWidget *parent)
 
     // 窗口属性-全屏、置顶
     this->setWindowFlag(Qt::WindowStaysOnTopHint);
-//    this->setWindowFlag(Qt::FramelessWindowHint);
-//    this->showFullScreen();
+    this->setWindowFlag(Qt::FramelessWindowHint);
+    this->showFullScreen();
 
     // 定时器初始化
     m_process = new QProcess(this);
