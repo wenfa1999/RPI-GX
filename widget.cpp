@@ -17,7 +17,7 @@ Widget::Widget(QWidget *parent)
     ,humAxisXIndex(0)
     ,lightState(0)
     ,hasMqttClient(false)
-    ,settingsWidget(new GXSettings())
+    ,settingsWidget(new GXSettings(this))
 {
     ui->setupUi(this);
 
@@ -119,6 +119,19 @@ Widget::Widget(QWidget *parent)
         });
 
     });
+    /// GXSettings
+    // 更新地点
+    connect(this->settingsWidget, &GXSettings::adcodeUpdated, this, [&](QString adacode){
+        qDebug() << adacode;
+        this->weatherInfo.setAdacode(adacode);
+        weatherInfo.getWeatherInfo();
+    });
+    // 回复默认
+    connect(this->settingsWidget, &GXSettings::setDefault, this, [&](){
+        this->weatherInfo.setAdacode(settingsWidget->getAdcode());
+        weatherInfo.getWeatherInfo();
+    });
+
 
     // 定时器更新时间
     connect(m_timerUpdateTimer, &QTimer::timeout, this, &Widget::updateTime);
@@ -476,7 +489,8 @@ void Widget::turnLight(int state)
 void Widget::mqttInit()
 {
     m_client = new QMqttClient(this);
-    m_client->setHostname("1.117.198.232");
+//    m_client->setHostname("1.117.198.232");
+    m_client->setHostname("mqtt.gwf.icu");
     m_client->setPort(1883);
     m_client->setClientId("rpi");
     m_client->connectToHost();
@@ -610,7 +624,8 @@ void Widget::showSettings()
 //    dlg->exec();
 
 //    settingsWidget->setWindowFlags( Qt::Dialog| Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint);
-    settingsWidget->resize(400, 320);
+//    settingsWidget->resize(400, 320);
+    settingsWidget->setWindowModality(Qt::WindowModal);
     settingsWidget->show();
 
 

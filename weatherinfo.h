@@ -19,6 +19,7 @@ public:
     WeatherInfo();
 
     void getWeatherInfo();
+    void setAdacode(QString adacode = "440113");
 
     // 返回参数
     bool status;    // 返回状态-1:成功，0:失败

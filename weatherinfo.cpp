@@ -29,6 +29,12 @@ void WeatherInfo::getWeatherInfo()
     });
 }
 
+void WeatherInfo::setAdacode(QString adacode)
+{
+    url = "https://restapi.amap.com/v3/weather/weatherInfo?key=cae79ec076b4f851b0937ded621b1026&city=" + adacode;
+    request.setUrl(url);
+}
+
 
 //bool status;    // 返回状态-1:成功，0:失败
 //size_t count;   // 返回结果总数目

@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
@@ -30,7 +33,31 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QWidget" name="widget" native="true">
+    <widget class="QWidget" name="mainWidget" native="true">
+     <property name="styleSheet">
+      <string notr="true">#mainWidget {
+  background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(132, 250, 176, 255), stop:1 rgba(143, 211, 244, 255));
+border-radius:10px;
+}
+
+QPushButton {
+	border-radius: 10px;
+    padding: 6px 12px;
+    background-color: #2C3E50;
+    border: 2px solid rgb(164, 145, 145);
+    color: white;
+	box-shadow: 5px 5px 5px rgba(0,0,0,0.5);
+}
+
+QPushButton:hover {
+    background-color: #2980b9;
+}
+
+QPushButton:pressed {
+    background-color: #2c3e50;
+}
+</string>
+     </property>
      <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,4,0">
       <item>
        <widget class="QWidget" name="widget_2" native="true">
@@ -59,6 +86,9 @@
            <layout class="QGridLayout" name="gridLayout">
             <item row="0" column="1">
              <widget class="QLineEdit" name="lineEdit">
+              <property name="text">
+               <string>mqtt.gwf.icu</string>
+              </property>
               <property name="placeholderText">
                <string>Mqtt服务器地址</string>
               </property>
@@ -103,6 +133,9 @@
             </item>
             <item row="0" column="3">
              <widget class="QLineEdit" name="lineEdit_2">
+              <property name="text">
+               <string>1883</string>
+              </property>
               <property name="placeholderText">
                <string>Mqtt端口号(1883)</string>
               </property>
@@ -133,45 +166,45 @@
            <property name="title">
             <string>本地设置</string>
            </property>
-           <widget class="QLabel" name="label_6">
-            <property name="geometry">
-             <rect>
-              <x>30</x>
-              <y>70</y>
-              <width>67</width>
-              <height>17</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>当前地址：</string>
-            </property>
-           </widget>
-           <widget class="QPushButton" name="button_updateLocal">
-            <property name="geometry">
-             <rect>
-              <x>370</x>
-              <y>60</y>
-              <width>89</width>
-              <height>25</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>更新地址</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_currentLocal">
-            <property name="geometry">
-             <rect>
-              <x>140</x>
-              <y>70</y>
-              <width>67</width>
-              <height>17</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_6">
+              <property name="text">
+               <string>当前地址：</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_currentLocal">
+              <property name="text">
+               <string>广东 / 番禺区</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="button_updateLocal">
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string>更新地址</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>
@@ -195,6 +228,19 @@
          </item>
          <item>
           <widget class="QPushButton" name="button_default">
+           <property name="styleSheet">
+            <string notr="true">QPushButton{
+	
+	color: none;
+	border-style: solid;
+    border-bottom: 2px solid rgb(164, 145, 145); /* 底部边框线颜色 */
+    border-left: 0px transparent;
+    border-right: 0px transparent;
+    border-top: 0px transparent;
+	background-color: none;
+	border-radius:none;
+}</string>
+           </property>
            <property name="text">
             <string>恢复默认设置</string>
            </property>
@@ -202,6 +248,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="button_cancel">
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
            <property name="text">
             <string>取消</string>
            </property>

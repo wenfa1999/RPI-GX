@@ -27,7 +27,7 @@ class Ui_Form
 {
 public:
     QVBoxLayout *verticalLayout;
-    QWidget *widget;
+    QWidget *mainWidget;
     QVBoxLayout *verticalLayout_2;
     QWidget *widget_2;
     QVBoxLayout *verticalLayout_4;
@@ -45,9 +45,11 @@ public:
     QLineEdit *lineEdit_4;
     QLabel *label_2;
     QGroupBox *groupBox;
+    QHBoxLayout *horizontalLayout_2;
+    QSpacerItem *horizontalSpacer_2;
     QLabel *label_6;
-    QPushButton *button_updateLocal;
     QLabel *label_currentLocal;
+    QPushButton *button_updateLocal;
     QWidget *widget_4;
     QHBoxLayout *horizontalLayout;
     QSpacerItem *horizontalSpacer;
@@ -60,15 +62,38 @@ public:
         if (Form->objectName().isEmpty())
             Form->setObjectName(QString::fromUtf8("Form"));
         Form->resize(768, 400);
+        Form->setStyleSheet(QString::fromUtf8(""));
         verticalLayout = new QVBoxLayout(Form);
         verticalLayout->setSpacing(0);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        widget = new QWidget(Form);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        verticalLayout_2 = new QVBoxLayout(widget);
+        mainWidget = new QWidget(Form);
+        mainWidget->setObjectName(QString::fromUtf8("mainWidget"));
+        mainWidget->setStyleSheet(QString::fromUtf8("#mainWidget {\n"
+"  background-color: qlineargradient(spread:pad, x1:1, y1:0, x2:1, y2:1, stop:0 rgba(132, 250, 176, 255), stop:1 rgba(143, 211, 244, 255));\n"
+"border-radius:10px;\n"
+"}\n"
+"\n"
+"QPushButton {\n"
+"	border-radius: 10px;\n"
+"    padding: 6px 12px;\n"
+"    background-color: #2C3E50;\n"
+"    border: 2px solid rgb(164, 145, 145);\n"
+"    color: white;\n"
+"	box-shadow: 5px 5px 5px rgba(0,0,0,0.5);\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #2980b9;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #2c3e50;\n"
+"}\n"
+""));
+        verticalLayout_2 = new QVBoxLayout(mainWidget);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
-        widget_2 = new QWidget(widget);
+        widget_2 = new QWidget(mainWidget);
         widget_2->setObjectName(QString::fromUtf8("widget_2"));
         verticalLayout_4 = new QVBoxLayout(widget_2);
         verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
@@ -81,7 +106,7 @@ public:
 
         verticalLayout_2->addWidget(widget_2);
 
-        widget_3 = new QWidget(widget);
+        widget_3 = new QWidget(mainWidget);
         widget_3->setObjectName(QString::fromUtf8("widget_3"));
         verticalLayout_3 = new QVBoxLayout(widget_3);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
@@ -138,22 +163,35 @@ public:
 
         groupBox = new QGroupBox(widget_3);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
+        horizontalLayout_2 = new QHBoxLayout(groupBox);
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_2->addItem(horizontalSpacer_2);
+
         label_6 = new QLabel(groupBox);
         label_6->setObjectName(QString::fromUtf8("label_6"));
-        label_6->setGeometry(QRect(30, 70, 67, 17));
-        button_updateLocal = new QPushButton(groupBox);
-        button_updateLocal->setObjectName(QString::fromUtf8("button_updateLocal"));
-        button_updateLocal->setGeometry(QRect(370, 60, 89, 25));
+
+        horizontalLayout_2->addWidget(label_6);
+
         label_currentLocal = new QLabel(groupBox);
         label_currentLocal->setObjectName(QString::fromUtf8("label_currentLocal"));
-        label_currentLocal->setGeometry(QRect(140, 70, 67, 17));
+
+        horizontalLayout_2->addWidget(label_currentLocal);
+
+        button_updateLocal = new QPushButton(groupBox);
+        button_updateLocal->setObjectName(QString::fromUtf8("button_updateLocal"));
+        button_updateLocal->setStyleSheet(QString::fromUtf8(""));
+
+        horizontalLayout_2->addWidget(button_updateLocal);
+
 
         verticalLayout_3->addWidget(groupBox);
 
 
         verticalLayout_2->addWidget(widget_3);
 
-        widget_4 = new QWidget(widget);
+        widget_4 = new QWidget(mainWidget);
         widget_4->setObjectName(QString::fromUtf8("widget_4"));
         horizontalLayout = new QHBoxLayout(widget_4);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
@@ -163,11 +201,23 @@ public:
 
         button_default = new QPushButton(widget_4);
         button_default->setObjectName(QString::fromUtf8("button_default"));
+        button_default->setStyleSheet(QString::fromUtf8("QPushButton{\n"
+"	\n"
+"	color: none;\n"
+"	border-style: solid;\n"
+"    border-bottom: 2px solid rgb(164, 145, 145); /* \345\272\225\351\203\250\350\276\271\346\241\206\347\272\277\351\242\234\350\211\262 */\n"
+"    border-left: 0px transparent;\n"
+"    border-right: 0px transparent;\n"
+"    border-top: 0px transparent;\n"
+"	background-color: none;\n"
+"	border-radius:none;\n"
+"}"));
 
         horizontalLayout->addWidget(button_default);
 
         button_cancel = new QPushButton(widget_4);
         button_cancel->setObjectName(QString::fromUtf8("button_cancel"));
+        button_cancel->setStyleSheet(QString::fromUtf8(""));
 
         horizontalLayout->addWidget(button_cancel);
 
@@ -181,7 +231,7 @@ public:
 
         verticalLayout_2->setStretch(1, 4);
 
-        verticalLayout->addWidget(widget);
+        verticalLayout->addWidget(mainWidget);
 
 
         retranslateUi(Form);
@@ -194,18 +244,20 @@ public:
         Form->setWindowTitle(QCoreApplication::translate("Form", "Form", nullptr));
         label_5->setText(QCoreApplication::translate("Form", "\350\256\276\347\275\256", nullptr));
         groupBox_5->setTitle(QCoreApplication::translate("Form", "Mqtt", nullptr));
+        lineEdit->setText(QCoreApplication::translate("Form", "mqtt.gwf.icu", nullptr));
         lineEdit->setPlaceholderText(QCoreApplication::translate("Form", "Mqtt\346\234\215\345\212\241\345\231\250\345\234\260\345\235\200", nullptr));
         label_3->setText(QCoreApplication::translate("Form", "\350\264\246\345\217\267\357\274\232", nullptr));
         label->setText(QCoreApplication::translate("Form", "\345\234\260\345\235\200\357\274\232", nullptr));
         lineEdit_3->setPlaceholderText(QCoreApplication::translate("Form", "\345\217\257\351\200\211", nullptr));
         label_4->setText(QCoreApplication::translate("Form", " \345\257\206\347\240\201\357\274\232", nullptr));
+        lineEdit_2->setText(QCoreApplication::translate("Form", "1883", nullptr));
         lineEdit_2->setPlaceholderText(QCoreApplication::translate("Form", "Mqtt\347\253\257\345\217\243\345\217\267(1883)", nullptr));
         lineEdit_4->setPlaceholderText(QCoreApplication::translate("Form", "\345\217\257\351\200\211", nullptr));
         label_2->setText(QCoreApplication::translate("Form", "\347\253\257\345\217\243\357\274\232", nullptr));
         groupBox->setTitle(QCoreApplication::translate("Form", "\346\234\254\345\234\260\350\256\276\347\275\256", nullptr));
         label_6->setText(QCoreApplication::translate("Form", "\345\275\223\345\211\215\345\234\260\345\235\200\357\274\232", nullptr));
+        label_currentLocal->setText(QCoreApplication::translate("Form", "\345\271\277\344\270\234 / \347\225\252\347\246\272\345\214\272", nullptr));
         button_updateLocal->setText(QCoreApplication::translate("Form", "\346\233\264\346\226\260\345\234\260\345\235\200", nullptr));
-        label_currentLocal->setText(QString());
         button_default->setText(QCoreApplication::translate("Form", "\346\201\242\345\244\215\351\273\230\350\256\244\350\256\276\347\275\256", nullptr));
         button_cancel->setText(QCoreApplication::translate("Form", "\345\217\226\346\266\210", nullptr));
         button_confirm->setText(QCoreApplication::translate("Form", "\347\241\256\345\256\232 ", nullptr));

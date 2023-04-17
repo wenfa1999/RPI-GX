@@ -10,6 +10,7 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QNetworkAccessManager>
+#include <QGraphicsDropShadowEffect>
 
 
 QT_BEGIN_NAMESPACE
@@ -25,7 +26,8 @@ public:
     QString getAdcode() const;
 
 signals:
-
+    void adcodeUpdated(QString adcode);
+    void setDefault(void);
 private:
     Ui::Form *ui;
 
@@ -35,12 +37,12 @@ private:
     QNetworkReply *reply;
 
     QString adcode;
+    QString tmpAdcode;
+    QString local;
+    QString tmpLocal;
+    bool ifSetDefault;
 
-    // QWidget interface
-protected:
-    void mousePressEvent(QMouseEvent *event) override;
-    void mouseReleaseEvent(QMouseEvent *event) override;
-    void mouseMoveEvent(QMouseEvent *event) override;
+
 };
 
 #endif // GXSETTINGS_H

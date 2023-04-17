@@ -397,6 +397,11 @@ public:
         horizontalLayout_8->setObjectName(QString::fromUtf8("horizontalLayout_8"));
         button_settings = new QPushButton(widget_settings);
         button_settings->setObjectName(QString::fromUtf8("button_settings"));
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(button_settings->sizePolicy().hasHeightForWidth());
+        button_settings->setSizePolicy(sizePolicy1);
         button_settings->setStyleSheet(QString::fromUtf8("border:none;\n"
 "image: url(:/imgs/imgs/settings.svg);"));
 
