@@ -1,0 +1,35 @@
+<RCC>
+    <qresource prefix="/imgs">
+        <file>imgs/done.svg</file>
+        <file>imgs/sync.svg</file>
+        <file>imgs/lights_on.svg</file>
+        <file>imgs/lights_off.svg</file>
+        <file>imgs/rfid_error.svg</file>
+        <file>imgs/rfid_normal.svg</file>
+        <file>imgs/rfid_right.svg</file>
+        <file>imgs/local.svg</file>
+        <file>imgs/hum_blue.svg</file>
+        <file>imgs/windDIrect_blue.svg</file>
+        <file>imgs/hum_gray.svg</file>
+        <file>imgs/windPower_blue.svg</file>
+        <file>imgs/tmp_blue.svg</file>
+        <file>imgs/logo.png</file>
+        <file>imgs/settings.svg</file>
+    </qresource>
+    <qresource prefix="/weatherIcon">
+        <file>imgs/weatherIcon/sunshine.svg</file>
+        <file>imgs/weatherIcon/cloudy.svg</file>
+        <file>imgs/weatherIcon/overcast.svg</file>
+        <file>imgs/weatherIcon/rain.svg</file>
+        <file>imgs/weatherIcon/fog.svg</file>
+        <file>imgs/weatherIcon/gale.svg</file>
+        <file>imgs/weatherIcon/smog.svg</file>
+        <file>imgs/weatherIcon/rainsnow.svg</file>
+        <file>imgs/weatherIcon/snow.svg</file>
+        <file>imgs/weatherIcon/cold.svg</file>
+        <file>imgs/weatherIcon/hot.svg</file>
+        <file>imgs/weatherIcon/unknown.svg</file>
+        <file>imgs/weatherIcon/lesscloud.svg</file>
+        <file>imgs/weatherIcon/snowice.svg</file>
+    </qresource>
+</RCC>
