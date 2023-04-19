@@ -206,7 +206,6 @@ Widget::Widget(QWidget *parent)
     });
 
     // 获取天气
-
     weatherInfo.getWeatherInfo();
     connect(&weatherInfo, &WeatherInfo::getWeatherFinished, this, [&](){
         ui->label_city->setText(weatherInfo.province + " / " + weatherInfo.city);
@@ -377,6 +376,11 @@ void Widget::chartsInit()
     // 湿度
     seriesHum->attachAxis(axisXHum);
     seriesHum->attachAxis(axisYHum);
+
+
+    // fix: 修复更新图表后存在残留(性能存疑)
+    ui->widget_chartsTmp->setViewportUpdateMode(QChartView::FullViewportUpdate);
+    ui->widget_chartsHmp->setViewportUpdateMode(QChartView::FullViewportUpdate);
 }
 
 /**
