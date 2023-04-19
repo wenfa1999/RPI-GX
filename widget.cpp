@@ -5,6 +5,8 @@ Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget)
     ,secondCounts(0)
+    ,isAddingRfid(false)
+    ,isRemovingRfid(false)
     ,temAxisXMin(0)
     ,temAxisXMax(5)
     ,temAxisYMin(29)
@@ -20,6 +22,9 @@ Widget::Widget(QWidget *parent)
     ,settingsWidget(new GXSettings(this))
 {
     ui->setupUi(this);
+
+    rfidList.append("437a5895");
+    rfidList.append("fb59054b");
 
     // 初始化服务端监听端口
     tcpServer = new QTcpServer(this);
@@ -37,9 +42,9 @@ Widget::Widget(QWidget *parent)
     ui->list_rfid->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
     // 窗口属性-全屏、置顶
-    this->setWindowFlag(Qt::WindowStaysOnTopHint);
-    this->setWindowFlag(Qt::FramelessWindowHint);
-    this->showFullScreen();
+//    this->setWindowFlag(Qt::WindowStaysOnTopHint);
+//    this->setWindowFlag(Qt::FramelessWindowHint);
+//    this->showFullScreen();
 
     // 定时器初始化
     m_process = new QProcess(this);
@@ -75,10 +80,10 @@ Widget::Widget(QWidget *parent)
          * 钥匙卡：FB 59 05 4B
          * 饭卡：7A C2 0F 2F（手机NFC）
          */
-        QByteArrayList accessId({"437a5895", "fb59054b"});
+//        QByteArrayList accessId({"437a5895", "fb59054b"});
         connect(clientSocket, &QTcpSocket::readyRead, this, [=](){
             QByteArray data = clientSocket->readAll();
-            qDebug() << "收到:" << data;
+//            qDebug() << "收到:" << data;
             if (data.contains("hello"))
             {
                 qDebug() << "收到欢迎语";
@@ -86,24 +91,46 @@ Widget::Widget(QWidget *parent)
             else if (data.contains("restart")){}
             else
             {
-
                 qDebug() << "收到卡号：" << data.toHex().left(8);
-
                 QByteArray carId = data.toHex().left(8);
                 QString itemStr = QDateTime::currentDateTime().toString("yyyy年M月d日") +
                         "  " + QDateTime::currentDateTime().toString("hh:mm:ss")+
                         "\t" + carId;
-                QListWidgetItem *item = new QListWidgetItem(itemStr);
-                if (accessId.contains(carId))
+                QListWidgetItem *item = new QListWidgetItem();
+                if (isAddingRfid)
                 {
-                    qDebug() << "主人访问:" << data.toHex().left(8);
+                    qDebug() << "添加门卡:" << carId;
+                    itemStr.append("(添加门卡)");
+                    rfidList.append(carId);
+                    qDebug() << "list:" << rfidList;
+                    this->settingsWidget->addRfidDone();
+                    isAddingRfid = false;
+                }
+                else if (isRemovingRfid)
+                {
+                    isRemovingRfid = false;
+                    if (rfidList.contains(carId))
+                        rfidList.removeAll(carId);
+                    qDebug() << "list:" << rfidList;
+                    this->settingsWidget->removeRfidDone();
+                    itemStr.append("(移除门卡)");
                 }
                 else
                 {
-                    qDebug() << "陌生人访问" << data.toHex().left(8);
-                    QColor color(192, 72, 81);  // 玉红
-                    item->setForeground(QBrush(color));
+                    if (rfidList.contains(carId))
+                    {
+                        qDebug() << "主人访问:" << data.toHex().left(8);
+                        itemStr.append("(白名单)");
+                    }
+                    else
+                    {
+                        qDebug() << "陌生人访问" << data.toHex().left(8);
+                        itemStr.append("(陌生人)");
+                        QColor color(192, 72, 81);  // 玉红
+                        item->setForeground(QBrush(color));
+                    }
                 }
+                item->setText(itemStr);
                 ui->list_rfid->addItem(item);
                 ui->list_rfid->scrollToBottom();
                 QJsonObject statusObj = rootJson["status"].toObject();
@@ -119,6 +146,7 @@ Widget::Widget(QWidget *parent)
         });
 
     });
+
     /// GXSettings
     // 更新地点
     connect(this->settingsWidget, &GXSettings::adcodeUpdated, this, [&](QString adacode){
@@ -126,12 +154,19 @@ Widget::Widget(QWidget *parent)
         this->weatherInfo.setAdacode(adacode);
         weatherInfo.getWeatherInfo();
     });
-    // 回复默认
+    // 恢复默认
     connect(this->settingsWidget, &GXSettings::setDefault, this, [&](){
         this->weatherInfo.setAdacode(settingsWidget->getAdcode());
         weatherInfo.getWeatherInfo();
     });
-
+    // 添加rfid
+    connect(this->settingsWidget, &GXSettings::addRfid, this, [&](){
+        this->isAddingRfid = true;
+    });
+    // 移除rfid
+    connect(this->settingsWidget, &GXSettings::removeRfid, this, [&](){
+        this->isRemovingRfid = true;
+    });
 
     // 定时器更新时间
     connect(m_timerUpdateTimer, &QTimer::timeout, this, &Widget::updateTime);
@@ -360,12 +395,17 @@ void Widget::updateCharts()
     QByteArray fileData = file.readAll().simplified();
     file.close();
     auto list = fileData.split(' ');
+
+    double tmp = list.at(1).split('.').at(0).toDouble() + list.at(1).split('.').at(1).left(1).toDouble() * 0.1;
+    double hum = list.at(0).toDouble();
+//    qDebug() << "list.1" << list.at(1) << "tmp" << tmp;
     // 温度
     seriesTmp->append(tmpAxisXIndex++, list.at(1).toDouble());
-    ui->label_currentTmp->setText("当前室内温度: "+list.at(1)+"℃");
+//    ui->label_currentTmp->setText("当前室内温度: "+list.at(1).left(4)+"℃");
+    ui->label_currentTmp->setText("当前室内温度: " + QString::number(tmp) + "℃");
     // 湿度
     seriesHum->append(humAxisXIndex++, list.at(0).toDouble());
-    ui->label_currentHum->setText("当前室内相对湿度: " + list.at(0) + "%");
+    ui->label_currentHum->setText("当前室内相对湿度: " + QString::number(hum) + "%");
     // x轴缩放
     if (tmpAxisXIndex > temAxisXMax)
     {
@@ -428,8 +468,8 @@ void Widget::updateCharts()
     chartForTmp->update();
 
     QJsonObject statusObj = rootJson["status"].toObject();
-    statusObj["tmp"] = list.at(1).toDouble();
-    statusObj["hum"] = list.at(0).toDouble();
+    statusObj["tmp"] = tmp;
+    statusObj["hum"] = hum;
     this->rootJson["status"] = statusObj;
 }
 
@@ -597,7 +637,7 @@ void Widget::mqttSend()
     //    qDebug() << "RootJson: " << rootJson;
     QJsonDocument document(rootJson);
     m_client->publish(QString("GX/rpi"), document.toJson());
-    m_updateMqttStatusTimer->start(5000);
+    m_updateMqttStatusTimer->start(3000);
     hasMqttClient = false;
 }
 

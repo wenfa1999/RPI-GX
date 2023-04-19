@@ -167,6 +167,29 @@ QPushButton:pressed {
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_2">
             <item>
+             <widget class="QWidget" name="widget" native="true">
+              <layout class="QGridLayout" name="gridLayout_2">
+               <item row="0" column="1">
+                <widget class="QPushButton" name="button_addRfid">
+                 <property name="text">
+                  <string>添加门卡</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QPushButton" name="button_removeRfid">
+                 <property name="text">
+                  <string>移除门卡</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QWidget" name="widget_5" native="true"/>
+            </item>
+            <item>
              <spacer name="horizontalSpacer_2">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>

@@ -51,6 +51,9 @@ private:
     QTimer *m_timerUpdateTimer; // 更新时间
     QTimer *m_chartUpdateTimer; // 更新温湿度图表
     size_t secondCounts;  // 计算过去了多少个周期(1s一个周期)，3600即为1小时，刷新一次天气
+    QStringList rfidList;   // RFID白名单
+    bool isAddingRfid;  // 是否正在添加卡号
+    bool isRemovingRfid;   // 是否正在移除卡号
 
     double temAxisXMin;
     double temAxisXMax;
@@ -77,11 +80,6 @@ private:
     int newProcData;
 
     int lightState;
-    //    QWidget *settingWidget = new QWidget(this);
-    //    settingWidget->setParent(this);
-    //    settingWidget->setWindowModality(Qt::WindowModal);
-    //    settingWidget->resize(400,320);
-    //    settingWidget->setWindowFlags(settingWidget->windowFlags() | Qt::Window| Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint);
     void updateTime(void);
     void chartsInit(void);  // 初始化图表
     void updateCharts(void);    // 更新图表

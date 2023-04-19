@@ -46,6 +46,11 @@ public:
     QLabel *label_2;
     QGroupBox *groupBox;
     QHBoxLayout *horizontalLayout_2;
+    QWidget *widget;
+    QGridLayout *gridLayout_2;
+    QPushButton *button_addRfid;
+    QPushButton *button_removeRfid;
+    QWidget *widget_5;
     QSpacerItem *horizontalSpacer_2;
     QLabel *label_6;
     QLabel *label_currentLocal;
@@ -164,6 +169,28 @@ public:
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
         horizontalLayout_2 = new QHBoxLayout(groupBox);
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        widget = new QWidget(groupBox);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        gridLayout_2 = new QGridLayout(widget);
+        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
+        button_addRfid = new QPushButton(widget);
+        button_addRfid->setObjectName(QString::fromUtf8("button_addRfid"));
+
+        gridLayout_2->addWidget(button_addRfid, 0, 1, 1, 1);
+
+        button_removeRfid = new QPushButton(widget);
+        button_removeRfid->setObjectName(QString::fromUtf8("button_removeRfid"));
+
+        gridLayout_2->addWidget(button_removeRfid, 0, 0, 1, 1);
+
+
+        horizontalLayout_2->addWidget(widget);
+
+        widget_5 = new QWidget(groupBox);
+        widget_5->setObjectName(QString::fromUtf8("widget_5"));
+
+        horizontalLayout_2->addWidget(widget_5);
+
         horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout_2->addItem(horizontalSpacer_2);
@@ -254,6 +281,8 @@ public:
         lineEdit_4->setPlaceholderText(QCoreApplication::translate("Form", "\345\217\257\351\200\211", nullptr));
         label_2->setText(QCoreApplication::translate("Form", "\347\253\257\345\217\243\357\274\232", nullptr));
         groupBox->setTitle(QCoreApplication::translate("Form", "\346\234\254\345\234\260\350\256\276\347\275\256", nullptr));
+        button_addRfid->setText(QCoreApplication::translate("Form", "\346\267\273\345\212\240\351\227\250\345\215\241", nullptr));
+        button_removeRfid->setText(QCoreApplication::translate("Form", "\347\247\273\351\231\244\351\227\250\345\215\241", nullptr));
         label_6->setText(QCoreApplication::translate("Form", "\345\275\223\345\211\215\345\234\260\345\235\200\357\274\232", nullptr));
         label_currentLocal->setText(QCoreApplication::translate("Form", "\345\271\277\344\270\234 / \347\225\252\347\246\272\345\214\272", nullptr));
         button_updateLocal->setText(QCoreApplication::translate("Form", "\346\233\264\346\226\260\345\234\260\345\235\200", nullptr));

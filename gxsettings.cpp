@@ -25,9 +25,9 @@ GXSettings::GXSettings(QWidget *parent)
         connect(reply, &QNetworkReply::finished, this, [&](){
             QJsonDocument document = QJsonDocument::fromJson(reply->readAll());
             QJsonObject object = document.object();
-//            qDebug() << object;
+            //            qDebug() << object;
             this->tmpAdcode = object["adcode"].toString();
-//            qDebug() << "adcode:" << adcode;
+            //            qDebug() << "adcode:" << adcode;
             tmpLocal = object["province"].toString() + " / " + object["city"].toString();
             ui->label_currentLocal->setText(tmpLocal);
         });
@@ -47,9 +47,11 @@ GXSettings::GXSettings(QWidget *parent)
         this->tmpLocal = this->local;
         qDebug () << "local:" << local;
         ui->label_currentLocal->setText(local);
-\
+        \
         ui->button_default->setEnabled(true);
         ifSetDefault = false;
+        ui->button_addRfid->setText("添加门卡");
+        ui->button_removeRfid->setText("移除门卡");
         this->hide();
     });
     connect(ui->button_confirm, &QPushButton::clicked, this, [&](){
@@ -61,11 +63,35 @@ GXSettings::GXSettings(QWidget *parent)
 
         ui->button_default->setEnabled(true);
         ifSetDefault = false;
+        ui->button_addRfid->setText("添加门卡");
+        ui->button_removeRfid->setText("移除门卡");
         this->hide();
+    });
+
+    connect(ui->button_removeRfid, &QPushButton::clicked, this, [&](){
+        ui->button_removeRfid->setText("正在读卡...");
+        qDebug() << "移除门卡" ;
+        emit removeRfid();
+    });
+
+    connect(ui->button_addRfid, &QPushButton::clicked, this, [&](){
+        ui->button_addRfid->setText("正在读卡...");
+        qDebug() << "添加门卡" ;
+        emit addRfid();
     });
 }
 
 QString GXSettings::getAdcode() const
 {
     return adcode;
+}
+
+void GXSettings::addRfidDone()
+{
+    ui->button_addRfid->setText("已添加");
+}
+
+void GXSettings::removeRfidDone()
+{
+    ui->button_removeRfid->setText("已移除");
 }

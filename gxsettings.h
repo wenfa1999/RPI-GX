@@ -24,10 +24,15 @@ public:
     explicit GXSettings(QWidget *parent = nullptr);
 
     QString getAdcode() const;
+    void addRfidDone();
+    void removeRfidDone(void);
 
 signals:
     void adcodeUpdated(QString adcode);
     void setDefault(void);
+
+    void addRfid();
+    void removeRfid();
 private:
     Ui::Form *ui;
 
